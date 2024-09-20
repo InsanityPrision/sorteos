@@ -17,7 +17,7 @@ export const loginUser = (email: string, password: string): void => {
 
   if (isSameEmail === false || isSamePassword === false) {
     console.log("Usuario no registrado o credenciales incorrectas");
-    process.exitCode = 1;
+    process.exit();
   }
 
   programData.userEmail = findEmail!.email;
