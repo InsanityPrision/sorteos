@@ -41,7 +41,6 @@ export const createGiveaway = (): void => {
 
 export const listGiveaways = (): void => {
   let giveawayCount = 0;
-  console.log(programData.giveaways.length);
   for (let count = 0; count <= programData.giveaways.length; count++) {
     giveawayCount = count;
   }
@@ -60,4 +59,15 @@ export const listGiveaways = (): void => {
         "\n"
     );
   }
+};
+
+export const deleteGiveaway = (deletePosition: number): void => {
+  if (deletePosition <= programData.giveaways.length) {
+    programData.giveaways.splice(deletePosition - 1, 1);
+    console.log("Sorteo eliminado");
+  } else if (deletePosition > programData.giveaways.length) {
+    console.log("Posicion incorrecta");
+  }
+
+  saveData();
 };
