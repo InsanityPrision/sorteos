@@ -24,16 +24,14 @@ export const loginUser = (email: string, password: string): void => {
 };
 
 export const createGiveaway = (): void => {
-  const newGiveawayNameAndSocial = askUserNewGiveawayData();
-  const newGiveawayParticipants: Giveaway = {
-    name: "",
-    socialNetwork: "",
+  const newGiveawayInfo = askUserNewGiveawayData();
+
+  const newGiveaway: Giveaway = {
+    name: newGiveawayInfo.giveawayName,
+    socialNetwork: newGiveawayInfo.giveawaySocialNetwork,
     participants: [],
   };
-  const newGiveaway = Object.assign(
-    newGiveawayParticipants,
-    newGiveawayNameAndSocial
-  );
+
   programData.giveaways.push(newGiveaway);
 
   saveData();
@@ -42,21 +40,24 @@ export const createGiveaway = (): void => {
 };
 
 export const listGiveaways = (): void => {
-  let songCount = 0;
+  let giveawayCount = 0;
+  console.log(programData.giveaways.length);
   for (let count = 0; count <= programData.giveaways.length; count++) {
-    songCount = count;
+    giveawayCount = count;
   }
   if (programData.giveaways.length === 0) {
     console.log("No hay ningún sorteo activo");
   } else if (programData.giveaways.length >= 1) {
-    console.log(`Estos son los ${
-      programData.giveaways.length
-    } sorteos disponibles: \n 
-    
-    ${programData.giveaways.forEach((giveaway) => {
+    programData.giveaways.forEach(
+      (giveaway) =>
+        console.log(
+          `${giveawayCount} Sorteo de un ${giveaway.name} en ${giveaway.socialNetwork}`
+        ),
       console.log(
-        `${songCount}Sorteo de ${giveaway.name} en ${giveaway.socialNetwork}`
-      );
-    })}`);
+        `Éstos son los ${programData.giveaways.length} sorteos disponibles`
+      ) +
+        "\n" +
+        "\n"
+    );
   }
 };
