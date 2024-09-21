@@ -27,3 +27,21 @@ export const loginUser = (email: string, password: string): void => {
 
   console.log(`Bienvenido ${findName!.name}`);
 };
+
+export const createGiveaway = (): void => {
+  const newGiveawayNameAndSocial = askUserNewGiveawayData();
+  const newGiveawayParticipants: Giveaway = {
+    name: "",
+    socialNetwork: "",
+    participants: [],
+  };
+  const newGiveaway = Object.assign(
+    newGiveawayParticipants,
+    newGiveawayNameAndSocial
+  );
+  programData.giveaways.push(newGiveaway);
+
+  saveData();
+
+  console.log("Sorteo creado");
+};
