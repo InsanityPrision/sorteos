@@ -6,26 +6,21 @@ import { Giveaway } from "./types.js";
 import { askUserNewGiveawayData } from "./ui.js";
 
 export const loginUser = (email: string, password: string): void => {
-  const findAdmin = programData.users.find((userAdmin) => userAdmin.isAdmin);
-  const findName = programData.users.find((userName) => userName.name);
-  const findEmail = programData.users.find((userEmail) => userEmail.email);
-  const isSameEmail = findEmail?.email === email;
-  const findPassword = programData.users.find(
-    (userPassword) => userPassword.password
+  const userInfo = programData.users.find(
+    (userInformation) =>
+      userInformation?.email === email && userInformation.password === password
   );
-  const isSamePassword = findPassword?.password === password;
 
-  if (isSameEmail === false || isSamePassword === false) {
-    console.log("Usuario no registrado o credenciales incorrectas");
-    process.exit();
+  if (userInfo?.email !== email || userInfo.password !== password) {
+    console.log("Usuario no registrado o credenciales incorrectas"),
+      process.exit();
   }
-
-  programData.userEmail = findEmail!.email;
-  programData.isAdmin = findAdmin!.isAdmin;
+  programData.userEmail = userInfo!.email;
+  programData.isAdmin = userInfo!.isAdmin;
 
   saveData();
 
-  console.log(`Bienvenido ${findName!.name}`);
+  console.log(`Bienvenido ${userInfo.name}`);
 };
 
 export const createGiveaway = (): void => {
@@ -44,4 +39,24 @@ export const createGiveaway = (): void => {
   saveData();
 
   console.log("Sorteo creado");
+};
+
+export const listGiveaways = (): void => {
+  let songCount = 0;
+  for (let count = 0; count <= programData.giveaways.length; count++) {
+    songCount = count;
+  }
+  if (programData.giveaways.length === 0) {
+    console.log("No hay ningún sorteo activo");
+  } else if (programData.giveaways.length >= 1) {
+    console.log(`Estos son los ${
+      programData.giveaways.length
+    } sorteos disponibles: \n 
+    
+    ${programData.giveaways.forEach((giveaway) => {
+      console.log(
+        `${songCount}Sorteo de ${giveaway.name} en ${giveaway.socialNetwork}`
+      );
+    })}`);
+  }
 };
