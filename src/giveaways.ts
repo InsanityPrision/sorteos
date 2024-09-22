@@ -71,3 +71,35 @@ export const deleteGiveaway = (deletePosition: number): void => {
 
   saveData();
 };
+
+export const enterGiveaway = (enterPosition: number): void => {
+  if (enterPosition <= programData.giveaways.length) {
+    const giveawayInfo = programData.giveaways.find(
+      (giveawayInformation) =>
+        giveawayInformation.name && giveawayInformation.socialNetwork
+    );
+
+    programData.giveaways[enterPosition - 1] = {
+      name: giveawayInfo!.name,
+      socialNetwork: giveawayInfo!.socialNetwork,
+      participants: [
+        {
+          name: userInfo.name,
+          email: programData.userEmail,
+          password: "",
+          isAdmin: programData.isAdmin,
+        },
+      ],
+    };
+
+    saveData();
+    console.log("Te has inscrito en el sorteo! SUERTE!");
+  } else if (enterPosition > programData.giveaways.length) {
+    console.log("El sorteo no existe, prueba otra vez!");
+  }
+};
+
+export const listUserGiveaways = (): void => {
+  
+  if (programData.userEmail ===  )
+}
