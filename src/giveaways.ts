@@ -74,15 +74,14 @@ export const deleteGiveaway = (deletePosition: number): void => {
 
 export const enterGiveaway = (enterPosition: number): void => {
   if (enterPosition <= programData.giveaways.length) {
-    (programData.giveaways[enterPosition - 1].participants = [
-      {
-        name: "",
-        email: programData.userEmail,
-        password: "",
-        isAdmin: programData.isAdmin,
-      },
-    ]),
+    programData.giveaways[enterPosition - 1].participants.push({
+      name: "",
+      email: programData.userEmail,
+      password: "",
+      isAdmin: programData.isAdmin,
+    }),
       saveData();
+
     console.log("Te has inscrito en el sorteo! SUERTE!");
   } else if (enterPosition > programData.giveaways.length) {
     console.log("El sorteo no existe, prueba otra vez!");
@@ -96,12 +95,15 @@ export const listUserGiveaways = (): void => {
   const someEmail = giveawayInfo?.participants.some(
     (email) => email.email === programData.userEmail
   );
-  const filterEmail = giveawayInfo?.participants.filter(
-    (email) => email.email === programData.userEmail
-  );
+
   if (someEmail === true) {
-    console.log(
-      `Estas inscrito en los siguientes ${filterEmail?.length} sorteos`
-    );
+    console.log(`Estas inscrito en los siguientes sorteos`);
+    programData.giveaways.forEach((giveaway) => {
+      console.log(
+        `Estas inscrito en el sorteo ${giveaway.name} que se realizará en ${giveaway.socialNetwork}`
+      );
+    });
+  } else {
+    console.log("No estas inscrito en ningún sorteo");
   }
 };
