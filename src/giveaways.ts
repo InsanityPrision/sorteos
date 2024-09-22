@@ -74,25 +74,15 @@ export const deleteGiveaway = (deletePosition: number): void => {
 
 export const enterGiveaway = (enterPosition: number): void => {
   if (enterPosition <= programData.giveaways.length) {
-    const giveawayInfo = programData.giveaways.find(
-      (giveawayInformation) =>
-        giveawayInformation.name && giveawayInformation.socialNetwork
-    );
-
-    programData.giveaways[enterPosition - 1] = {
-      name: giveawayInfo!.name,
-      socialNetwork: giveawayInfo!.socialNetwork,
-      participants: [
-        {
-          name: userInfo.name,
-          email: programData.userEmail,
-          password: "",
-          isAdmin: programData.isAdmin,
-        },
-      ],
-    };
-
-    saveData();
+    (programData.giveaways[enterPosition - 1].participants = [
+      {
+        name: "",
+        email: programData.userEmail,
+        password: "",
+        isAdmin: programData.isAdmin,
+      },
+    ]),
+      saveData();
     console.log("Te has inscrito en el sorteo! SUERTE!");
   } else if (enterPosition > programData.giveaways.length) {
     console.log("El sorteo no existe, prueba otra vez!");
@@ -100,6 +90,18 @@ export const enterGiveaway = (enterPosition: number): void => {
 };
 
 export const listUserGiveaways = (): void => {
-  
-  if (programData.userEmail ===  )
-}
+  const giveawayInfo = programData.giveaways.find(
+    (giveawayInformation) => giveawayInformation.participants
+  );
+  const someEmail = giveawayInfo?.participants.some(
+    (email) => email.email === programData.userEmail
+  );
+  const filterEmail = giveawayInfo?.participants.filter(
+    (email) => email.email === programData.userEmail
+  );
+  if (someEmail === true) {
+    console.log(
+      `Estas inscrito en los siguientes ${filterEmail?.length} sorteos`
+    );
+  }
+};
